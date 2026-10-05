@@ -6,7 +6,7 @@ import {
   useMotionTemplate,
 } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
-import imageHere from '../assets/image.jpg';
+import imageHere from '../assets/scenario.jpg';
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -306,11 +306,11 @@ export const RegistrationSection = () => {
         </motion.div>
       </div>
 
-      {/* ---------- Footer ---------- */}
+      {/* Footer / Hard Stop */}
       <footer className="relative z-10 flex h-20 shrink-0 items-center gap-3 border-t border-white/15 px-6 md:px-12 lg:px-16">
         <span aria-hidden className="h-2 w-2 rounded-full bg-secondary" />
         <h2 className="text-base font-light tracking-wide text-white/70 md:text-lg">
-          AI for Manufacturing and Supply Chain Institute
+          AI for Manufacturing and Supply Chain Institute (AIMS), Grupo Educativo Tecnológico de Monterrey
         </h2>
       </footer>
     </section>

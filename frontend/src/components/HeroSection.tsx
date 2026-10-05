@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useCountdown } from '../hooks/useCountdown';
 import { Calendar, Clock, ChevronRight } from 'lucide-react';
-import imageHere from '../assets/image.jpg';
+import imageHere from '../assets/Picture1.jpg';
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -14,7 +14,7 @@ const reveal = (delay: number) => ({
 });
 
 export const HeroSection = () => {
-  const timeLeft = useCountdown('2027-04-15T10:00:00');
+  const timeLeft = useCountdown('2027-04-21T08:00:00');
 
   return (
     <section className="relative flex min-h-screen w-full items-center overflow-hidden bg-black text-white">
@@ -29,13 +29,13 @@ export const HeroSection = () => {
         <img
           src={imageHere}
           alt=""
-          className="h-full w-full object-cover object-top opacity-60 grayscale"
+          className="h-full w-full object-cover object-top opacity-75"
         />
       </motion.div>
 
       {/* Escrim para legibilidad */}
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black" />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/10 to-black" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-transparent" />
 
       {/* Resplandor de acento que "respira" */}
       <motion.div
@@ -58,7 +58,7 @@ export const HeroSection = () => {
           {...reveal(0.25)}
           className="mb-8 text-5xl font-light leading-[1.02] tracking-tight sm:text-6xl md:text-8xl"
         >
-          Which future are<br /> you building for?
+          Which <span className="text-tertiary">future</span> are<br /> you building for?
         </motion.h1>
 
         <motion.h3
@@ -73,10 +73,10 @@ export const HeroSection = () => {
           className="flex flex-wrap gap-x-10 gap-y-3 border-t border-white/15 pt-6 text-base font-light text-white/80 md:text-lg"
         >
           <div className="flex items-center gap-3">
-            <Calendar className="h-5 w-5 text-secondary" /> APR 15, 2027
+            <Calendar className="w-6 h-6 text-secondary" /> APR 21, 2027
           </div>
           <div className="flex items-center gap-3">
-            <Clock className="h-5 w-5 text-secondary" /> 10:00 AM (CST)
+            <Clock className="w-6 h-6 text-secondary" /> 8:00 AM (CST)
           </div>
         </motion.div>
 
@@ -88,7 +88,7 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease }}
-                className="block text-4xl font-extralight leading-none tabular-nums sm:text-5xl md:text-7xl"
+                className="block text-4xl font-extrabold leading-none sm:text-5xl md:text-7xl"
               >
                 {value.toString().padStart(2, '0')}
               </motion.span>

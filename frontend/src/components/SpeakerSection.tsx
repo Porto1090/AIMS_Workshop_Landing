@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, type Variants } from 'framer-motion';
-import imageHere from '../assets/image.jpg';
+import imageHere from '../assets/dr_shardul.jpg';
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -29,7 +29,7 @@ export const SpeakerSection = () => {
           <motion.img
             src={imageHere}
             alt="Dr. Shardul Phadnis"
-            className="absolute inset-0 h-full w-full object-cover object-top grayscale transition-[filter] duration-700 group-hover:grayscale-0"
+            className="absolute inset-0 h-full w-full object-cover transition-[filter] duration-700"
             initial={{ scale: 1.2 }}
             whileInView={{ scale: 1 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -46,16 +46,12 @@ export const SpeakerSection = () => {
           whileInView="show"
           viewport={{ once: true, amount: 0.4 }}
         >
-          <motion.p variants={item} className="mb-4 text-base tracking-wide text-secondary">
-            Speaker Profile
-          </motion.p>
-
-          <motion.h3
-            variants={item}
-            className="mb-8 text-5xl font-light leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl"
-          >
+          <p className="text-secondary font-black tracking-widest uppercase mb-4 text-sm md:text-base">
+            Strategic Lead
+          </p>
+          <h3 className="text-5xl md:text-6xl font-black text-white uppercase leading-none tracking-tighter mb-6">
             Dr. Shardul <br /> Phadnis
-          </motion.h3>
+          </h3>
 
           <motion.div variants={item} className="mb-8 border-l-2 border-tertiary pl-6">
             <p className="text-xl font-light leading-snug text-white md:text-2xl">

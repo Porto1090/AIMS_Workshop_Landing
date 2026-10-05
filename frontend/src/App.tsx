@@ -1,9 +1,39 @@
 import React from 'react';
 import { motion, MotionConfig } from 'framer-motion';
 import { HeroSection } from './components/HeroSection';
-import { SplitQuoteSection } from './components/SplitQuoteSection';
 import { RegistrationSection } from './components/RegistrationSection';
 import { SpeakerSection } from './components/SpeakerSection';
+
+import { SplitQuoteCard, SplitQuoteCardProps } from './components/SplitQuoteSection';
+import card1 from './assets/fist.jpg';
+import card2 from './assets/lady.jpg';
+import card3 from './assets/gates.jpg';
+
+const cardData: SplitQuoteCardProps[] = [
+  {
+    number: '01 • Autonomy and control',
+    title: 'What if we lose control of AI?',
+    description: 'As planning, purchasing and production move to AI agents, who holds the off switch in your plants and across your supply network?',
+    quote: 'Visibility without predictive action is just watching your margins bleed in real-time.',
+    authorOrTruth: 'Industry Truth',
+    imageSrc: card1,
+    imagePosition: 'right',
+  },
+  {
+    number: '02 • Workforce and skills',
+    title: 'Who will run your operations in 2035?',
+    description: "AI is moving into entry-level work, and PISA 2025 shows Mexicos's 15-year-olds still scoring low in science, math and reading.",
+    imageSrc: card2,
+    imagePosition: 'left',
+  },
+  {
+    number: '03 • Technology Dependence',
+    title: 'Who will own the AI your supply chain runs on?',
+    description: "Yesterday's single point of failure was a chip supplier. Tomorrow's could be a model, a cloud or a vendor you don't control.",
+    imageSrc: card3,
+    imagePosition: 'right',
+  },
+];
 
 export default function App() {
   return (
@@ -23,7 +53,7 @@ export default function App() {
             <div className="flex items-center gap-3 text-lg font-medium tracking-tight text-white md:text-xl">
               <span aria-hidden className="h-2 w-2 rounded-full bg-secondary" />
               <span>
-                AI <span className="text-secondary">Supply Chain Event</span>
+                AI <span className="text-secondary">Scenario Planning For Manufacturing and Supply Chain</span>
               </span>
             </div>
             <a
@@ -38,7 +68,9 @@ export default function App() {
         {/* Sin padding superior: el header flota sobre el hero (cada sección ya reserva su espacio) */}
         <main>
           <HeroSection />
-          <SplitQuoteSection />
+          {cardData.map((card, index) => (
+            <SplitQuoteCard key={index} {...card} />
+          ))}
           <SpeakerSection />
           <RegistrationSection />
         </main>
