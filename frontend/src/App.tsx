@@ -9,6 +9,8 @@ import card1 from './assets/fist.jpg';
 import card2 from './assets/lady.jpg';
 import card3 from './assets/gates.jpg';
 
+import logo_image from './assets/logo.png';
+
 const cardData: SplitQuoteCardProps[] = [
   {
     number: '01 • Autonomy and control',
@@ -56,12 +58,8 @@ export default function App() {
                 AI <span className="text-secondary">Scenario Planning For Manufacturing and Supply Chain</span>
               </span>
             </div>
-            <a
-              href="#registration"
-              className="rounded-full border border-white/30 px-6 py-2 text-sm font-medium tracking-wide text-white transition-colors duration-300 hover:bg-white hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              Contact us
-            </a>
+            
+            <img src={logo_image} alt="Logo" className="h-12" />
           </div>
         </motion.header>
 
