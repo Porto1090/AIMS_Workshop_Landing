@@ -55,7 +55,7 @@ export default function App() {
             <div className="flex items-center gap-3 text-md font-medium tracking-tight text-white md:text-xl">
               <span aria-hidden className="h-2 w-2 rounded-full bg-secondary" />
               <span>
-                AI <span className="text-secondary">Scenario Planning For Manufacturing and Supply Chain</span>
+                AI <span className="text-secondary">Scenario Planning Workshop For Manufacturing and Supply Chain Leading Industries</span>
               </span>
             </div>
             
