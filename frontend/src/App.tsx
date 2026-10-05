@@ -52,14 +52,14 @@ export default function App() {
           className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-black/40 backdrop-blur-md"
         >
           <div className="flex h-20 items-center justify-between px-6 md:px-10">
-            <div className="flex items-center gap-3 text-lg font-medium tracking-tight text-white md:text-xl">
+            <div className="flex items-center gap-3 text-md font-medium tracking-tight text-white md:text-xl">
               <span aria-hidden className="h-2 w-2 rounded-full bg-secondary" />
               <span>
                 AI <span className="text-secondary">Scenario Planning For Manufacturing and Supply Chain</span>
               </span>
             </div>
             
-            <img src={logo_image} alt="Logo" className="h-12" />
+            <img src={logo_image} alt="Logo" className="hidden lg:block h-12" />
           </div>
         </motion.header>
 
