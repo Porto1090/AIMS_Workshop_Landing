@@ -2,67 +2,109 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useCountdown } from '../hooks/useCountdown';
 import { Calendar, Clock, ChevronRight } from 'lucide-react';
+import imageHere from '../assets/image.jpg';
+
+const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+// Entrada orquestrada: cada bloque aparece con un pequeño desfase
+const reveal = (delay: number) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 1, delay, ease },
+});
 
 export const HeroSection = () => {
   const timeLeft = useCountdown('2027-04-15T10:00:00');
 
   return (
-    <section className="h-screen w-full bg-brand text-white flex flex-col justify-center items-center pb-4 border-b-4 border-secondary relative">
-      <div className="max-w-6xl w-full">
+    <section className="relative flex min-h-screen w-full items-center overflow-hidden bg-black text-white">
+      {/* Fondo: imagen con zoom lento (equivalente al video del hero de referencia) */}
+      <motion.div
+        aria-hidden
+        className="absolute inset-0"
+        initial={{ scale: 1.08 }}
+        animate={{ scale: [1.08, 1.2] }}
+        transition={{ duration: 26, ease: 'linear', repeat: Infinity, repeatType: 'reverse' }}
+      >
+        <img
+          src={imageHere}
+          alt=""
+          className="h-full w-full object-cover object-top opacity-60 grayscale"
+        />
+      </motion.div>
+
+      {/* Escrim para legibilidad */}
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
+
+      {/* Resplandor de acento que "respira" */}
+      <motion.div
+        aria-hidden
+        className="absolute -right-40 top-1/4 h-[28rem] w-[28rem] rounded-full bg-secondary blur-[140px]"
+        animate={{ opacity: [0.1, 0.24, 0.1] }}
+        transition={{ duration: 9, ease: 'easeInOut', repeat: Infinity }}
+      />
+
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col px-6 pb-12 pt-28 md:px-12 md:pb-16">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="inline-block border-2 border-secondary text-secondary px-4 py-2 text-sm font-bold uppercase tracking-widest mb-8"
+          {...reveal(0.1)}
+          className="mb-8 inline-flex w-fit items-center gap-3 rounded-full border border-white/20 bg-black/30 px-4 py-2 text-sm tracking-wide text-white/80 backdrop-blur-md"
         >
-          AIMS SCENARIO PLANNING WORKSHOP - APRIL 2027
+          <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+          AIMS Scenario Planning Workshop - April 2027
         </motion.div>
 
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-8"
+          {...reveal(0.25)}
+          className="mb-8 text-5xl font-light leading-[1.02] tracking-tight sm:text-6xl md:text-8xl"
         >
-          Which future are<br /> you <span className="text-tertiary">building</span> for?
+          Which future are<br /> you building for?
         </motion.h1>
 
         <motion.h3
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-2xl md:text-3xl font-black uppercase tracking-tighter leading-none mb-8"
+          {...reveal(0.4)}
+          className="mb-12 max-w-2xl text-xl font-light leading-snug text-white/70 md:text-2xl"
         >
           Scenarios for AI in manufacturing and supply chains
         </motion.h3>
 
-        <div className="flex flex-wrap gap-8 mb-16 text-lg font-bold uppercase tracking-wide">
+        <motion.div
+          {...reveal(0.55)}
+          className="flex flex-wrap gap-x-10 gap-y-3 border-t border-white/15 pt-6 text-base font-light text-white/80 md:text-lg"
+        >
           <div className="flex items-center gap-3">
-            <Calendar className="w-6 h-6 text-secondary" /> APR 15, 2027
+            <Calendar className="h-5 w-5 text-secondary" /> APR 15, 2027
           </div>
           <div className="flex items-center gap-3">
-            <Clock className="w-6 h-6 text-secondary" /> 10:00 AM (CST)
+            <Clock className="h-5 w-5 text-secondary" /> 10:00 AM (CST)
           </div>
-        </div>
+        </motion.div>
 
-        <div className="flex gap-4 md:gap-8 mb-16">
+        <motion.div {...reveal(0.7)} className="mt-10 flex divide-x divide-white/15">
           {Object.entries(timeLeft).map(([unit, value]) => (
-            <div key={unit} className="flex flex-col items-start">
-              <div className="w-20 h-20 md:w-32 md:h-32 flex items-center justify-center bg-transparent border-4 border-secondary mb-2">
-                <span className="text-3xl md:text-5xl font-black">
-                  {value.toString().padStart(2, '0')}
-                </span>
-              </div>
-              <span className="text-sm uppercase font-bold tracking-widest text-secondary">
+            <div key={unit} className="flex flex-col px-4 first:pl-0 md:px-10">
+              <motion.span
+                key={value}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease }}
+                className="block text-4xl font-extralight leading-none tabular-nums sm:text-5xl md:text-7xl"
+              >
+                {value.toString().padStart(2, '0')}
+              </motion.span>
+              <span className="mt-3 text-sm capitalize tracking-wide text-secondary">
                 {unit}
               </span>
             </div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* CTA con el naranja neón (descomentado y adaptado al tema) */}
-        {/* <a
+        {/* CTA (sigue comentado, como en tu versión original)
+        <a
           href="#registration"
-          className="inline-flex items-center gap-4 px-10 py-5 text-xl font-black text-white bg-tertiary hover:bg-tertiary-hover transition-colors uppercase border-4 border-transparent hover:border-secondary"
+          className="mt-12 inline-flex w-fit items-center gap-3 rounded-full bg-tertiary px-8 py-4 text-lg font-medium text-white transition-colors hover:bg-tertiary-hover"
         >
-          Secure Your Spot <ChevronRight className="w-6 h-6" />
+          Secure Your Spot <ChevronRight className="h-5 w-5" />
         </a> */}
       </div>
     </section>
