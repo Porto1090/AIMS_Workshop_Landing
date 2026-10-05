@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/herosection.tsx","./src/components/registrationsection.tsx","./src/components/speakersection.tsx","./src/components/splitquotesection.tsx","./src/hooks/usecountdown.ts"],"version":"5.9.3"}
