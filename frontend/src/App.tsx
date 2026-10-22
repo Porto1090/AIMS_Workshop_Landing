@@ -3,6 +3,7 @@ import { motion, MotionConfig } from 'framer-motion';
 import { HeroSection } from './components/HeroSection';
 import { RegistrationSection } from './components/RegistrationSection';
 import { SpeakerSection } from './components/SpeakerSection';
+import AboutWorkshop from './components/AboutWorkshop';
 
 import { SplitQuoteCard, SplitQuoteCardProps } from './components/SplitQuoteSection';
 import card1 from './assets/fist.jpg';
@@ -69,7 +70,8 @@ export default function App() {
           {cardData.map((card, index) => (
             <SplitQuoteCard key={index} {...card} />
           ))}
-          <SpeakerSection />
+          {/*<SpeakerSection />*/}
+          <AboutWorkshop />
           <RegistrationSection />
         </main>
       </div>
