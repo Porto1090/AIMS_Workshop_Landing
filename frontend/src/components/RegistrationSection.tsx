@@ -10,6 +10,24 @@ import imageHere from '../assets/scenario.jpg';
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
+const MailIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    className="text-secondary"
+  >
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="m3 7 9 6 9-6" />
+  </svg>
+);
+
 /* ------------------------------------------------------------------ */
 /* Piezas reutilizables (solo dentro de esta sección)                  */
 /* ------------------------------------------------------------------ */
@@ -107,7 +125,7 @@ export const RegistrationSection = () => {
   return (
     <section
       id="registration"
-      className="relative flex min-h-screen w-full flex-col overflow-hidden bg-black"
+      className="relative flex min-h-screen w-full flex-col overflow-hidden bg-black px-40"
       onMouseMove={(e) => {
         const r = e.currentTarget.getBoundingClientRect();
         mx.set(e.clientX - r.left);
@@ -226,8 +244,8 @@ export const RegistrationSection = () => {
                       transition={{ duration: 0.3 }}
                       className="space-y-9"
                     >
-                      <Field id="full-name" label="Full Name" type="text" placeholder="John Doe" />
-                      <Field id="work-email" label="Work Email" type="email" placeholder="john@company.com" />
+                      <Field id="full-name" label="Full Name" type="text" placeholder="Eduardo Martínez" />
+                      <Field id="work-email" label="Work Email" type="email" placeholder="eduardo@email.com" />
 
                       <div className="relative">
                         {/* Pulso que llama la atención al botón */}
@@ -301,6 +319,25 @@ export const RegistrationSection = () => {
                   )}
                 </AnimatePresence>
               </div>
+                <div className="flex items-center gap-4 text-sm tracking-wide text-white/40">
+                  <span className="h-px flex-1 bg-white/15" />
+                  or
+                  <span className="h-px flex-1 bg-white/15" />
+                </div>
+
+                <p className="mb-3 mt-6 text-center text-sm tracking-wide text-white/60">
+                  Questions about the workshop? Contact us
+                </p>
+
+                <a
+                  href="mailto:ricardo.chavelas@tec.mx?subject=AIMS%20Scenario%20Planning%20Workshop"
+                  className="flex w-full items-center justify-center gap-3 rounded-full border border-white/25 px-5 py-4 text-lg font-light text-white transition-colors hover:border-secondary hover:text-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+                >
+                  <MailIcon />
+                  ricardo.chavelas@tec.mx
+                </a>
+              </div>
+              <div className="mt-6">
             </div>
           </div>
         </motion.div>
