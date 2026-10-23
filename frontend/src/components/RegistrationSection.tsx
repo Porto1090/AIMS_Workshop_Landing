@@ -54,7 +54,6 @@ const Line = ({
 );
 
 // Dos arcos de luz (secondary y tertiary) que giran alrededor del borde de la tarjeta.
-// Capa cuadrada centrada: lo justo para cubrir la tarjeta al girar (más barato de renderizar).
 const sweep = (from: number) =>
   `conic-gradient(from ${from}deg, transparent 0deg, currentColor 70deg, transparent 140deg)`;
 
@@ -79,7 +78,6 @@ const BorderSweep = () => (
 
 type FieldProps = { id: string; label: string } & React.InputHTMLAttributes<HTMLInputElement>;
 
-// Campo con línea inferior que se "enciende" con degradado al enfocar
 const Field = ({ id, label, ...props }: FieldProps) => (
   <div className="group">
     <label
@@ -108,6 +106,11 @@ const Field = ({ id, label, ...props }: FieldProps) => (
 /* ------------------------------------------------------------------ */
 
 export const RegistrationSection = () => {
+  const [formDataState, setFormDataState] = useState({
+    nombre: '',
+    correo: '',
+  });
+  const [cargando, setCargando] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Foco de luz que sigue al cursor
@@ -115,9 +118,37 @@ export const RegistrationSection = () => {
   const my = useMotionValue(-600);
   const spotlight = useMotionTemplate`radial-gradient(520px circle at ${mx}px ${my}px, rgba(255,255,255,0.08), transparent 70%)`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormDataState({
+      ...formDataState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setCargando(true);
+
+    const data = new FormData();
+    data.append('entry.470896937', formDataState.nombre); 
+    data.append('entry.1388802702', formDataState.correo); 
+
+    try {
+      await fetch(
+        'https://docs.google.com/forms/d/e/1FAIpQLSe61wy6UNQbLYDWcvQwei7XYgIWr8Z4tRkOniVLcrJI8Di-4w/formResponse',
+        {
+          method: 'POST',
+          body: data,
+          mode: 'no-cors',
+        }
+      );
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Error al registrar:', error);
+      alert('Hubo un error al enviar el registro. Por favor intenta de nuevo.');
+    } finally {
+      setCargando(false);
+    }
   };
 
   const gridMask = 'radial-gradient(ellipse at center, black 25%, transparent 75%)';
@@ -144,7 +175,7 @@ export const RegistrationSection = () => {
       </motion.div>
       <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black via-black/55 to-black" />
 
-      {/* Cuadrícula tenue con desvanecido en los bordes */}
+      {/* Cuadrícula tenue */}
       <div
         aria-hidden
         className="absolute inset-0"
@@ -213,7 +244,7 @@ export const RegistrationSection = () => {
           transition={{ duration: 1.1, delay: 0.3, ease }}
           className="relative w-full max-w-lg lg:col-span-5 lg:justify-self-end"
         >
-          {/* Brillo suave alrededor de la tarjeta (estático, barato de renderizar) */}
+          {/* Brillo suave alrededor de la tarjeta */}
           <div
             aria-hidden
             className="absolute inset-0 rounded-3xl text-secondary opacity-30"
@@ -244,8 +275,24 @@ export const RegistrationSection = () => {
                       transition={{ duration: 0.3 }}
                       className="space-y-9"
                     >
-                      <Field id="full-name" label="Full Name" type="text" placeholder="Eduardo Martínez" />
-                      <Field id="work-email" label="Work Email" type="email" placeholder="eduardo@email.com" />
+                      <Field 
+                        id="full-name" 
+                        name="nombre"
+                        label="Full Name" 
+                        type="text" 
+                        placeholder="Eduardo Martínez" 
+                        value={formDataState.nombre}
+                        onChange={handleChange}
+                      />
+                      <Field 
+                        id="work-email" 
+                        name="correo"
+                        label="Work Email" 
+                        type="email" 
+                        placeholder="eduardo@email.com" 
+                        value={formDataState.correo}
+                        onChange={handleChange}
+                      />
 
                       <div className="relative">
                         {/* Pulso que llama la atención al botón */}
@@ -257,14 +304,15 @@ export const RegistrationSection = () => {
                         />
                         <button
                           type="submit"
-                          className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-tertiary py-5 text-lg font-medium text-white transition-colors hover:bg-tertiary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                          disabled={cargando}
+                          className="group relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-tertiary py-5 text-lg font-medium text-white transition-colors hover:bg-tertiary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:opacity-50"
                         >
-                          {/* Destello que cruza el botón al pasar el cursor */}
+                          {/* Destello que cruza el botón */}
                           <span
                             aria-hidden
                             className="absolute inset-y-0 -left-1/3 w-1/3 -skew-x-12 bg-white/30 blur-md transition-transform duration-700 group-hover:translate-x-[420%]"
                           />
-                          <span className="relative">Register Now</span>
+                          <span className="relative">{cargando ? 'Sending...' : 'Register Now'}</span>
                           <ChevronRight className="relative h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                         </button>
                       </div>
@@ -314,30 +362,29 @@ export const RegistrationSection = () => {
                       <h3 className="mb-4 text-3xl font-light tracking-tight text-secondary md:text-4xl">
                         Registration Confirmed
                       </h3>
-                      <p className="text-lg font-light text-white/80">Check your inbox for access details.</p>
+                      <p className="text-lg font-light text-white/80">We have received your registration. We will contact you shortly with further details.</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
-                <div className="flex items-center gap-4 text-sm tracking-wide text-white/40">
-                  <span className="h-px flex-1 bg-white/15" />
-                  or
-                  <span className="h-px flex-1 bg-white/15" />
-                </div>
 
-                <p className="mb-3 mt-6 text-center text-sm tracking-wide text-white/60">
-                  Questions about the workshop? Contact us
-                </p>
-
-                <a
-                  href="mailto:ricardo.chavelas@tec.mx?subject=AIMS%20Scenario%20Planning%20Workshop"
-                  className="flex w-full items-center justify-center gap-3 rounded-full border border-white/25 px-5 py-4 text-lg font-light text-white transition-colors hover:border-secondary hover:text-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
-                >
-                  <MailIcon />
-                  ricardo.chavelas@tec.mx
-                </a>
+              <div className="flex items-center gap-4 text-sm tracking-wide text-white/40">
+                <span className="h-px flex-1 bg-white/15" />
+                or
+                <span className="h-px flex-1 bg-white/15" />
               </div>
-              <div className="mt-6">
+
+              <p className="mb-3 mt-6 text-center text-sm tracking-wide text-white/60">
+                Questions about the workshop? Contact us
+              </p>
+
+              <a
+                href="mailto:ricardo.chavelas@tec.mx?subject=AIMS%20Scenario%20Planning%20Workshop"
+                className="flex w-full items-center justify-center gap-3 rounded-full border border-white/25 px-5 py-4 text-lg font-light text-white transition-colors hover:border-secondary hover:text-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-secondary"
+              >
+                <MailIcon />
+                ricardo.chavelas@tec.mx
+              </a>
             </div>
           </div>
         </motion.div>
